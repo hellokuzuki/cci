@@ -9,7 +9,7 @@ jobs:
     steps:
       - run:
           name: demo stpe 1
-          command: pwd
+          command: df -H
 
   my_job_2:
     docker:
