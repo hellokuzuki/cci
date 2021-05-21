@@ -4,7 +4,7 @@ version: 2.1
 jobs:
   my_job_1:
     docker:
-      - image: hello-world
+      - image: circleci/node:10
     working_directory: ~/myproj
     steps:
       - run:
