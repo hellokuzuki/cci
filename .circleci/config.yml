@@ -66,6 +66,7 @@ workflows:
           filters:
             branches:
               only:
-                - circleci-project-setup
+                # - circleci-project-setup
+                - disabled
     jobs:
       - build
