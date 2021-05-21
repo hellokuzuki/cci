@@ -43,9 +43,11 @@ workflows:
   myworkflow:
     # Run the welcome/run job in its own container
     jobs:
-      - build:
-        requires:
-          - hold
+      - build
+      - hold:
+         type: approval
+         requires:
+           - build
       - api_test:
           requires:
             - build
@@ -54,5 +56,4 @@ workflows:
             - build
       - deploy:
           requires:
-            - api_test
-            - ui_test
+            - hold
