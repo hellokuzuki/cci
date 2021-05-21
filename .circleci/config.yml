@@ -2,7 +2,7 @@
 version: 2.1
 # Use a package of configuration called an orb.
 jobs:
-  my_job_1:
+  build:
     docker:
       - image: circleci/node:10
     working_directory: ~/myproj
@@ -11,7 +11,16 @@ jobs:
           name: demo stpe 1
           command: df -H
 
-  my_job_2:
+  api_test:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/myproj
+    steps:
+      - run:
+          name: demo stpe 1
+          command: df -H
+
+  ui_test:
     docker:
       - image: circleci/node:10
     working_directory: ~/myproj
@@ -19,7 +28,7 @@ jobs:
       - run:
           name: demo stpe 2
           command: pwd
-  my_job_3:
+  deploy:
     docker:
       - image: circleci/node:10
     working_directory: ~/myproj
@@ -34,9 +43,14 @@ workflows:
   myworkflow:
     # Run the welcome/run job in its own container
     jobs:
-      - my_job_1
-      - my_job_2
-      - my_job_3
-        requires:
-          - my_job_1
-          - my_job_2
+      - build
+      - api_test:
+          requires:
+            - build
+      - ui_test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - api_test
+            - ui_test
