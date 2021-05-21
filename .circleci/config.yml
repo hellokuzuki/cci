@@ -47,7 +47,8 @@ workflows:
       - hold:
          type: approval
          requires:
-           - build
+           - api_test
+           - ui_test
       - api_test:
           requires:
             - build
