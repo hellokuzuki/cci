@@ -40,7 +40,7 @@ jobs:
 # Orchestrate or schedule a set of jobs
 workflows:
   # Name the workflow "welcome"
-  myworkflow:
+  commit_workflow:
     # Run the welcome/run job in its own container
     jobs:
       - build
@@ -58,3 +58,14 @@ workflows:
       - deploy:
           requires:
             - hold
+
+  every-mins:
+    triggers:
+      - schedule:
+          cron: "3 * * * *"
+          filters:
+            branches:
+              only:
+                - circleci-project-setup
+    jobs:
+      - build
