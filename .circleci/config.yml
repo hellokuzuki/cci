@@ -13,7 +13,7 @@ jobs:
 
   my_job_2:
     docker:
-      - image: hello-world
+      - image: circleci/node:10
     working_directory: ~/myproj
     steps:
       - run:
