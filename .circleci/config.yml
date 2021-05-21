@@ -26,5 +26,5 @@ workflows:
   myworkflow:
     # Run the welcome/run job in its own container
     jobs:
-      - my_job1
+      - my_job_1
       - my_job_2
