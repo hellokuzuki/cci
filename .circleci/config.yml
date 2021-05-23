@@ -27,7 +27,7 @@ jobs:
     steps:
       - run:
           name: demo stpe 2
-          command: pwd
+          command: echo $user1
   deploy:
     docker:
       - image: circleci/node:10
@@ -35,7 +35,7 @@ jobs:
     steps:
       - run:
           name: demo stpe 2
-          command: ls -ltra
+          command: echo $user1
 
 # Orchestrate or schedule a set of jobs
 workflows:
@@ -60,6 +60,7 @@ workflows:
             # - hold
             - ui_test
             - api_test
+          context: prod
 
   every-mins:
     triggers:
