@@ -44,11 +44,11 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - build
-      - hold:
-         type: approval
-         requires:
-           - api_test
-           - ui_test
+      # - hold:
+      #    type: approval
+      #    requires:
+      #      - api_test
+      #      - ui_test
       - api_test:
           requires:
             - build
@@ -57,7 +57,9 @@ workflows:
             - build
       - deploy:
           requires:
-            - hold
+            # - hold
+            - ui_test
+            - api_test
 
   every-mins:
     triggers:
