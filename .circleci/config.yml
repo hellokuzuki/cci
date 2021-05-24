@@ -9,7 +9,10 @@ jobs:
     steps:
       - run:
           name: demo stpe 1
-          command: df -H
+          command: |
+          df -H
+          pwd
+          ls -ltra
 
   api_test:
     docker:
