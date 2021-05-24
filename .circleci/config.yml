@@ -14,7 +14,7 @@ jobs:
           pwd
           ls -ltra
       - run: mkdir -p workspace
-      - run: echo "hello world !" > workspce/test.log
+      - run: echo "hello world !" > workspace/test.log
       - persist_to_workspace:
           root: workspace
           paths: test.log
