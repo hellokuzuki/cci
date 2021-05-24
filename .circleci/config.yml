@@ -75,7 +75,8 @@ workflows:
   commit_workflow:
     # Run the welcome/run job in its own container
     jobs:
-      - build
+      - build:
+          context: prod
       # - hold:
       #    type: approval
       #    requires:
