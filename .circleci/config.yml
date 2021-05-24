@@ -8,10 +8,25 @@ jobs:
     working_directory: ~/myproj
     steps:
       - run:
-          name: demo stpe 1
-          command: df -H
+          name: "Setup custom envrionment variables"
+          command: echo 'export MY_ENV_VAR="FOO"' >> $BASH_ENV
+      - run:
+          name: "What branch am I on?"
+          command: echo ${CIRCLE_BRANCH}
+      - run:
+          name: "What branch am I on now?"
+          command: echo $CIRCLE_BRANCH
+      - run:
+          name: "What was my custom environment variable?"
+          command: echo ${MY_ENV_VAR}
+      - run:
+          name: "Print an env var stored in the Project"
+          command: echo ${PROJECT_ENV_VAR}
+      - run:
+          name: "Print an env var stored in a Context"
+          command: echo ${CONTEXT_ENV_VAR}
       - run: |
-          pwd
+          env
           ls -ltra
       - run: mkdir -p workspace
       - run: echo "hello world !" > workspace/test.log
