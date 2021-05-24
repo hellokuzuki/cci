@@ -9,8 +9,8 @@ jobs:
     steps:
       - run:
           name: demo stpe 1
-          command: |
-          df -H
+          command: df -H
+      - run: |
           pwd
           ls -ltra
 
