@@ -13,15 +13,28 @@ jobs:
       - run: |
           pwd
           ls -ltra
+      - run: mkdir -p workspace
+      - run: echo "hello world !" > workspce/test.log
+      - persist_to_workspace:
+          root: workspace
+          paths: test.log
 
   api_test:
     docker:
       - image: circleci/node:10
-    working_directory: ~/myproj
+    # working_directory: ~/myproj
     steps:
+      - attach_workspace:
+          at: ~/myproj/workspace
       - run:
           name: demo stpe 1
           command: df -H
+      - run: |
+          if [[ `cat ~/myproj/workspace/test.log` == "hello world !" ]]; then
+            echo "It worked!";
+          else
+            echo "Nope!"; exit 1
+          fi
 
   ui_test:
     docker:
