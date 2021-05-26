@@ -1,3 +1,4 @@
+
 # Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 # Use a package of configuration called an orb.
@@ -69,40 +70,55 @@ jobs:
           name: demo stpe 2
           command: echo $user1
 
+  docker-build:
+    docker:
+    # Primary container image where all steps run.
+     - image: buildpack-deps:trusty
+    # Secondary container image on common network.
+     - image: mongo:2.6.8-jessie
+       command: [mongod, --smallfiles]
+    working_directory: ~/
+    steps:
+      # command will execute in trusty container
+      # and can access mongo on localhost
+      - run: sleep 5 && nc -vz localhost 27017
 # Orchestrate or schedule a set of jobs
 workflows:
+  docker-test-job:
+    jobs:
+      - docker-build
   # Name the workflow "welcome"
-  commit_workflow:
-    # Run the welcome/run job in its own container
-    jobs:
-      - build:
-          context: prod
-      # - hold:
-      #    type: approval
-      #    requires:
-      #      - api_test
-      #      - ui_test
-      - api_test:
-          requires:
-            - build
-      - ui_test:
-          requires:
-            - build
-      - deploy:
-          requires:
-            # - hold
-            - ui_test
-            - api_test
-          context: prod
-
-  every-mins:
-    triggers:
-      - schedule:
-          cron: "25 * * * *"
-          filters:
-            branches:
-              only:
-                # - circleci-project-setup
-                - disabled
-    jobs:
-      - build
+  # commit_workflow:
+  #   # Run the welcome/run job in its own container
+  #   jobs:
+  #     - build:
+  #         context: prod
+  #     # - hold:
+  #     #    type: approval
+  #     #    requires:
+  #     #      - api_test
+  #     #      - ui_test
+  #     - api_test:
+  #         requires:
+  #           - build
+  #     - ui_test:
+  #         requires:
+  #           - build
+  #     - deploy:
+  #         requires:
+  #           # - hold
+  #           - ui_test
+  #           - api_test
+  #         context: prod
+  #
+  # every-mins:
+  #   triggers:
+  #     - schedule:
+  #         cron: "25 * * * *"
+  #         filters:
+  #           branches:
+  #             only:
+  #               # - circleci-project-setup
+  #               - disabled
+  #   jobs:
+  #     - build
