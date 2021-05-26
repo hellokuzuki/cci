@@ -74,13 +74,20 @@ jobs:
     docker:
     # Primary container image where all steps run.
      - image: buildpack-deps:trusty
+       auth:
+         username: $DOCKERHUB_ID
+         password: $DOCKERHUB_PASSWORD
     # Secondary container image on common network.
      - image: mongo:2.6.8-jessie
+       auth:
+         username: $DOCKERHUB_ID
+         password: $DOCKERHUB_PASSWORD
        command: [mongod, --smallfiles]
     working_directory: ~/
     steps:
       # command will execute in trusty container
       # and can access mongo on localhost
+      - run: pwd
       - run: sleep 5 && nc -vz localhost 27017
 # Orchestrate or schedule a set of jobs
 workflows:
